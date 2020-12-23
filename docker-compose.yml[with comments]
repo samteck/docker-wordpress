@@ -1,0 +1,76 @@
+#version of our docker-compose
+version: '3'
+
+services:
+
+  # MySQL container name
+  db:
+    # docker image and version for db
+    image: mysql:5.7
+    volumes:
+      # map localhost folder to mysql folder in container
+      - db_data:/var/lib/mysql
+    # restart policy : if server reboots the server restarts
+    restart: always
+    # these variables will be initialized when container runs 
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    # Run service on a docker network
+    networks:
+      - wpsite
+
+  # phpMyAdmin container name
+  phpmyadmin:
+    # phpmyadmin will wait till db is not started
+    depends_on:
+      - db
+    # docker image and version for phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    # restart policy : if server reboots the server restarts
+    restart: always
+    # expose the container port to local machine (host:container)
+    ports:
+      - '8080:80'
+    # MySQL instance host and root password
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    # Run service on a docker network
+    networks:
+      - wpsite
+
+  # Wordpress container name
+  wordpress:
+    # wordpress will wait till db is not started
+    depends_on:
+      - db
+    # latest version of wordpress
+    image: wordpress:latest
+    # expose the container port to local machine (host:container)
+    ports:
+      - '8000:80'
+    # restart policy : if server reboots the server restarts
+    restart: always
+    # access wordpress folders (wp-content :plugins, themes etc) on host machine
+    volumes: 
+      - wp_data:/var/www/html
+    # these variables will be initialized when container runs (service name can be used instead of IP)
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    # Run service on a docker network
+    networks:
+      - wpsite
+
+# define the network
+networks:
+  wpsite:
+# define the volumes
+volumes:
+  db_data:
+  wp_data:
+
