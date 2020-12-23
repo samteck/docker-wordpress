@@ -3,7 +3,7 @@ Running a **WordPress** instance inside **Docker** container with Persistent sto
 
 Docker is a CMS running on **LAMP stack** (Linux, Apache, MySQL, PHP). We will be running the full stack using docker-compose.
 
-<img src="https://github.com/samteck/indoor-outdoor-env-data-aggregator/blob/master/wordpress-docker.png" width="800">
+<img src="https://github.com/samteck/docker-wordpress/blob/master/wordpress-docker.png" width="800">
 
 We will use 2 docker images
 
