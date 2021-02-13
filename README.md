@@ -41,6 +41,10 @@ Here we are using volume instead of bind mounts. Volumes are completely managed 
 - sudo apt install docker-ce
 - sudo systemctl status docker
 
+Install Docker Compose
+- sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+- sudo chmod +x /usr/local/bin/docker-compose
+
 
 #### Give use root permission (not have to use sudo every time )
 - sudo usermod -aG docker ${USER}
@@ -49,6 +53,7 @@ Here we are using volume instead of bind mounts. Volumes are completely managed 
 #### Docker Compose
 
 docker-compose up -d
+
 docker-compose down
 
 To Tear Down (all delete persistent volumes)
